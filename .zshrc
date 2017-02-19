@@ -76,3 +76,4 @@ esac
 ### Alias ###
 setopt complete_aliases
 alias ls="ls --color"
+alias pbcopy="xsel --clipboard --input"

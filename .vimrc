@@ -13,6 +13,7 @@ if dein#load_state(expand('~/.vim/dein'))
   call dein#add('scrooloose/syntastic')
   call dein#add('godlygeek/tabular')
   call dein#add('plasticboy/vim-markdown')
+  call dein#add('sudo.vim')
 endif
 
 syntax enable
