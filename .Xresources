@@ -6,7 +6,7 @@ Xft.hintstyle: hintslight
 Xft.autohint: false
 Xft.lcdfilter: lcddefault
 
-URxvt.allow_bold: false
+URxvt.allow_bold: true
 URxvt.transparent: true
 URxvt.shading: 15
 
@@ -35,6 +35,9 @@ URxvt.color15: #d0d0d0
 
 ! Font
 URxvt.font: xft:Ricty:size=11:antialias=true
+URxvt.boldFont: xft:Ricty:Bold:size=11:antialias=true
+URxvt.italicFont: xft:Ricty:Bold:size=11:antialias=true
+URxvt.boldItalicFont: xft:Ricty:Bold:size=11:antialias=true
 
 ! Input method
 URxvt.inputMethod: fcitx
