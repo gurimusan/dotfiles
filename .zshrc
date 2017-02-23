@@ -77,3 +77,34 @@ esac
 setopt complete_aliases
 alias ls="ls --color"
 alias pbcopy="xsel --clipboard --input"
+alias open="xdg-open"
+alias docker_rmi_unused="docker rmi $(docker images -f 'dangling=true' -q)"
+
+### Peco history search ###
+#setopt hist_ignore_all_dups
+function peco-history-selection() {
+  local tac
+  if which tac > /dev/null; then
+    tac="tac"
+  else
+    tac="tail -r"
+  fi
+  BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
+
+### Ranger auto cd ###
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    /usr/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+# This binds Ctrl-O to ranger-cd:
+bindkey -s '^O' 'ranger-cd\n'

@@ -9,11 +9,14 @@ set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 if dein#load_state(expand('~/.vim/dein'))
   call dein#begin(expand('~/.vim/dein'))
   call dein#add('tomasr/molokai')
-  call dein#add('Shougo/neocomplcache')
   call dein#add('scrooloose/syntastic')
   call dein#add('godlygeek/tabular')
-  call dein#add('plasticboy/vim-markdown')
   call dein#add('sudo.vim')
+  call dein#add('plasticboy/vim-markdown')
+  call dein#add('StanAngeloff/php.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/unite.vim')
+  call dein#add('Shougo/vimfiler')
 endif
 
 syntax enable
@@ -23,33 +26,42 @@ syntax enable
 " -----
 filetype plugin on
 filetype indent on
-let mapleader = "\<Space>"      " ¥­¡¼¥Ş¥Ã¥×¥ê¡¼¥À¡¼
-set scrolloff=5                 " ¥¹¥¯¥í¡¼¥ë»ş¤ÎÍ¾Çò
-set textwidth=0                 " 1¹Ô¤ËÄ¹¤¤Ê¸¾Ï¤ò½ñ¤¤¤Æ¤â¼«Æ°¤ÇÀŞ¤êÊÖ¤·¤·¤Ê¤¤
-set nobackup                    " ¥Ğ¥Ã¥¯¥¢¥Ã¥×¤òºîÀ®¤·¤Ê¤¤
-set autoread                    " Â¾¤Ç½ñ¤­´¹¤¨¤é¤ì¤Æ¤â¼«Æ°¤Ç³«¤¯
-set noswapfile                  " ¥¹¥ï¥Ã¥×¥Õ¥¡¥¤¥ë¤òºî¤é¤Ê¤¤
-set hidden                      " ÊİÂ¸¤·¤Æ¤¤¤Ê¤¯¤Æ¤âÂ¾¤Î¥Õ¥¡¥¤¥ë¤ò³«¤±¤ë
-set backspace=indent,eol,start  " Backspace¥­¡¼¤Î±Æ¶ÁÈÏ°Ï¤ËÀ©¸Â¤òÀß¤±¤Ê¤¤
+let mapleader = "\<Space>"      " ã‚­ãƒ¼ãƒãƒƒãƒ—ãƒªãƒ¼ãƒ€ãƒ¼
+set scrolloff=5                 " ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã®ä½™ç™½
+set textwidth=0                 " 1è¡Œã«é•·ã„æ–‡ç« ã‚’æ›¸ã„ã¦ã‚‚è‡ªå‹•ã§æŠ˜ã‚Šè¿”ã—ã—ãªã„
+set nobackup                    " ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚’ä½œæˆã—ãªã„
+set autoread                    " ä»–ã§æ›¸ãæ›ãˆã‚‰ã‚Œã¦ã‚‚è‡ªå‹•ã§é–‹ã
+set noswapfile                  " ã‚¹ãƒ¯ãƒƒãƒ—ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‰ãªã„
+set hidden                      " ä¿å­˜ã—ã¦ã„ãªãã¦ã‚‚ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã‘ã‚‹
+set backspace=indent,eol,start  " Backspaceã‚­ãƒ¼ã®å½±éŸ¿ç¯„å›²ã«åˆ¶é™ã‚’è¨­ã‘ãªã„
 set formatoptions=lmoq
 set browsedir=buffer
-set whichwrap+=h,l,<,>,[,],b,s  " ¹ÔËö¡¦¹ÔÆ¬¤«¤é¼¡¤Î¹Ô¤Ø°ÜÆ°²ÄÇ½¤Ë
+set whichwrap+=h,l,<,>,[,],b,s  " è¡Œæœ«ãƒ»è¡Œé ­ã‹ã‚‰æ¬¡ã®è¡Œã¸ç§»å‹•å¯èƒ½ã«
 set modelines=0
+set visualbell                  " ãƒ“ãƒ¼ãƒ—éŸ³ã¯é³´ã‚‰ã•ãªã„
+if has('nvim')
+    tnoremap <Esc> <C-\><C-n>
+endif
+if exists(':tnoremap')
+    tnoremap <Esc> <C-\><C-n>
+endif
 
 " ------
 " Mouse
 " ------
-set clipboard=unnamed,unnamedplus " ¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤òOS¤È¶¦Í­
-set mouse=a                       " ²¾ÁÛÃ¼Ëö¾å¤Îvim¤Ç¥Ş¥¦¥¹¤ò»È¤¦
-set ttymouse=xterm2
+set clipboard=unnamed,unnamedplus " ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã‚’OSã¨å…±æœ‰
+set mouse=a                       " ä»®æƒ³ç«¯æœ«ä¸Šã®vimã§ãƒã‚¦ã‚¹ã‚’ä½¿ã†
+if !has('nvim')
+  set ttymouse=xterm2
+endif
 
 " ------------
 " Status line
 " ------------
-set laststatus=2  " ¥¹¥Æ¡¼¥¿¥¹¹Ô¤ò¾ï¤ËÉ½¼¨
-set ruler         " ¥«¡¼¥½¥ë°ÌÃÖÉ½¼¨
-set showcmd       " ¥³¥Ş¥ó¥É¤ò¥¹¥Æ¡¼¥¿¥¹¹Ô¤ËÉ½¼¨
-set showmode      " ¥â¡¼¥É¤ò¥¹¥Æ¡¼¥¿¥¹¹Ô¤ËÉ½¼¨
+set laststatus=2  " ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡Œã‚’å¸¸ã«è¡¨ç¤º
+set ruler         " ã‚«ãƒ¼ã‚½ãƒ«ä½ç½®è¡¨ç¤º
+set showcmd       " ã‚³ãƒãƒ³ãƒ‰ã‚’ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡Œã«è¡¨ç¤º
+set showmode      " ãƒ¢ãƒ¼ãƒ‰ã‚’ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹è¡Œã«è¡¨ç¤º
 
 " ------------------
 " Quick fix command
@@ -60,9 +72,9 @@ autocmd QuickfixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
 " -------
 " indent
 " -------
-set autoindent        " ¼«Æ°¤Ç¥¤¥ó¥Ç¥ó¥È
-set smartindent       " ²ş¹Ô»ş¤Î¥¤¥ó¥Ç¥ó¥È¤òÂ·¤¨¤ë
-set cindent           " C¸À¸ì¤Î¥Õ¥¡¥¤¥ë¤Î¼«Æ°¥¤¥ó¥Ç¥ó¥È
+set autoindent        " è‡ªå‹•ã§ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
+set smartindent       " æ”¹è¡Œæ™‚ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’æƒãˆã‚‹
+set cindent           " Cè¨€èªã®ãƒ•ã‚¡ã‚¤ãƒ«ã®è‡ªå‹•ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
 set tabstop=2
 set shiftwidth=2
 set softtabstop=0
@@ -104,20 +116,20 @@ autocmd FileType jinja      setlocal sw=2 sts=2 ts=2 et
 " --------
 " Dsiplay
 " --------
-set showmatch       " ³ç¸Ì¤ÎÂĞ±ş¤ò¥Ï¥¤¥é¥¤¥È
-set number          " ¹ÔÈÖ¹æÉ½¼¨
-set list            " ÉÔ²Ä»ëÊ¸»úÉ½¼¨
-set listchars=tab:>.,trail:_,extends:>,precedes:< " ÉÔ²Ä»ëÊ¸»ú¤ÎÉ½¼¨·Á¼°
-set display=uhex    " °õ»úÉÔ²ÄÇ½Ê¸»ú¤ò16¿Ê¿ô¤ÇÉ½¼¨
-set cursorline      " ¥«¡¼¥½¥ë¹Ô¤ò¥Ï¥¤¥é¥¤¥È
-set lazyredraw      " ¥³¥Ş¥ó¥É¼Â¹ÔÃæ¤ÏºÆÉÁ²è¤·¤Ê¤¤
-set ttyfast         " ¹âÂ®¥¿¡¼¥ß¥Ê¥ëÀÜÂ³¤ò¹Ô¤¦
+set showmatch       " æ‹¬å¼§ã®å¯¾å¿œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ
+set number          " è¡Œç•ªå·è¡¨ç¤º
+set list            " ä¸å¯è¦–æ–‡å­—è¡¨ç¤º
+set listchars=tab:>.,trail:_,extends:>,precedes:< " ä¸å¯è¦–æ–‡å­—ã®è¡¨ç¤ºå½¢å¼
+set display=uhex    " å°å­—ä¸å¯èƒ½æ–‡å­—ã‚’16é€²æ•°ã§è¡¨ç¤º
+set cursorline      " ã‚«ãƒ¼ã‚½ãƒ«è¡Œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ
+set lazyredraw      " ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œä¸­ã¯å†æç”»ã—ãªã„
+set ttyfast         " é«˜é€Ÿã‚¿ãƒ¼ãƒŸãƒŠãƒ«æ¥ç¶šã‚’è¡Œã†
 
-" Á´³Ñ¥¹¥Ú¡¼¥¹¤ÎÉ½¼¨
+" å…¨è§’ã‚¹ãƒšãƒ¼ã‚¹ã®è¡¨ç¤º
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
-match ZenkakuSpace /¡¡/
+match ZenkakuSpace /ã€€/
 
-" ¥«¥ì¥ó¥È¥¦¥£¥ó¥É¥¦¤Ë¤Î¤ß·ÓÀş¤ò°ú¤¯
+" ã‚«ãƒ¬ãƒ³ãƒˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ã®ã¿ç½«ç·šã‚’å¼•ã
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
@@ -130,11 +142,11 @@ highlight CursorLine ctermbg=black guibg=black
 " -----------
 " Completion
 " -----------
-set wildmenu              " ¥³¥Ş¥ó¥ÉÊä´°¤ò¶¯²½
-set wildchar=<tab>        " ¥³¥Ş¥ó¥ÉÊä´°¤ò¹Ô¤¦¥­¡¼
-set wildmode=list:full    " ¥ê¥¹¥ÈÉ½¼¨¡¢ºÇÄ¹¥Ş¥Ã¥Á
-set history=1000          " ¥³¥Ş¥ó¥É¡¦¸¡º÷¥Ñ¥¿¡¼¥ó¤ÎÍúÎò¿ô
-set complete+=k           " Êä´°¤Ë¼­½ñ¥Õ¥¡¥¤¥ë¤òÄÉ²Ã
+set wildmenu              " ã‚³ãƒãƒ³ãƒ‰è£œå®Œã‚’å¼·åŒ–
+set wildchar=<tab>        " ã‚³ãƒãƒ³ãƒ‰è£œå®Œã‚’è¡Œã†ã‚­ãƒ¼
+set wildmode=list:full    " ãƒªã‚¹ãƒˆè¡¨ç¤ºã€æœ€é•·ãƒãƒƒãƒ
+set history=1000          " ã‚³ãƒãƒ³ãƒ‰ãƒ»æ¤œç´¢ãƒ‘ã‚¿ãƒ¼ãƒ³ã®å±¥æ­´æ•°
+set complete+=k           " è£œå®Œã«è¾æ›¸ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è¿½åŠ 
 cnoremap <C-p> <Up>
 cnoremap <Up> <C-p>
 cnoremap <C-n> <Down>
@@ -143,12 +155,12 @@ cnoremap <Down> <C-n>
 " --------
 "  Search
 " --------
-set wrapscan    " ºÇ¸å¤Ş¤Ç¸¡º÷¤·¤¿¤éÀèÆ¬¤ØÌá¤ë
-set ignorecase  " ÂçÊ¸»ú¾®Ê¸»úÌµ»ë
-set smartcase   " ¸¡º÷Ê¸»ú¤ËÂçÊ¸»ú¤¬´Ş¤Ş¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¶èÊÌ¤·¤Æ¸¡º÷
-set incsearch   " ¥¤¥ó¥¯¥ê¥á¥ó¥È¥µ¡¼¥Á
-set hlsearch    " ¸¡º÷Ê¸»ú¤ò¥Ï¥¤¥é¥¤¥È
-" ESC¤ò2²ó²¡¤·¤¿¤é¥Ï¥¤¥é¥¤¥È¾Ãµî
+set wrapscan    " æœ€å¾Œã¾ã§æ¤œç´¢ã—ãŸã‚‰å…ˆé ­ã¸æˆ»ã‚‹
+set ignorecase  " å¤§æ–‡å­—å°æ–‡å­—ç„¡è¦–
+set smartcase   " æ¤œç´¢æ–‡å­—ã«å¤§æ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã‚‹å ´åˆã¯åŒºåˆ¥ã—ã¦æ¤œç´¢
+set incsearch   " ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã‚µãƒ¼ãƒ
+set hlsearch    " æ¤œç´¢æ–‡å­—ã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ
+" ESCã‚’2å›æŠ¼ã—ãŸã‚‰ãƒã‚¤ãƒ©ã‚¤ãƒˆæ¶ˆå»
 nnoremap <ESC><ESC> :<C-u>set nohlsearch<Return>
 
 " --------
@@ -165,18 +177,20 @@ inoremap <C-l> <Right>
 " Edit
 " -----
 set expandtab
-" undo ¥Õ¥¡¥¤¥ë¤ò°ì²Õ½ê¤Ë¤Ş¤È¤á¤ë
+" undo ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œã‚‹
+set undofile
+" undo ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä¸€ç®‡æ‰€ã«ã¾ã¨ã‚ã‚‹
 set undodir=~/.vim/undo
-" ÊİÂ¸»ş¤Ë¹ÔËö¤Î¶õÇò¤ò½üµî¤¹¤ë
+" ä¿å­˜æ™‚ã«è¡Œæœ«ã®ç©ºç™½ã‚’é™¤å»ã™ã‚‹
 autocmd BufWritePre * :%s/\s\+$//ge
-" XML¤ÎÊÄ¤¸¥¿¥°¤ò¼«Æ°Êä´°
+" XMLã®é–‰ã˜ã‚¿ã‚°ã‚’è‡ªå‹•è£œå®Œ
 augroup MyXML
   autocmd!
   autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
 augroup END
-" <leader>j ¤ÇJSON¤òformat
+" <leader>j ã§JSONã‚’format
 map <Leader>j !python -m json.tool<CR>
-" insert¥â¡¼¥É¤òÈ´¤±¤ë¤ÈIME¥ª¥Õ
+" insertãƒ¢ãƒ¼ãƒ‰ã‚’æŠœã‘ã‚‹ã¨IMEã‚ªãƒ•
 function! ImInActivate()
   call system('fcitx-remote -c')
 endfunction
@@ -207,5 +221,52 @@ let g:syntastic_disabled_filetypes=['scss']
 " ---------
 " Encoding
 " ---------
-set ffs=unix,dos,mac
 set encoding=utf-8
+set ffs=unix,dos,mac
+set fileencodings=iso-2022-jp,utf-8,cp932,sjis,euc-jp
+
+" -------------
+" RangerChooser
+" -------------
+function! RangeChooser()
+    let temp = tempname()
+    " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
+    " with ranger 1.4.2 through 1.5.0 instead.
+    "exec 'silent !ranger --choosefile=' . shellescape(temp)
+    if has("gui_running")
+        exec 'silent !xterm -e ranger --choosefiles=' . shellescape(temp)
+    else
+        exec 'silent !ranger --choosefiles=' . shellescape(temp)
+    endif
+    if !filereadable(temp)
+        redraw!
+        " Nothing to read.
+        return
+    endif
+    let names = readfile(temp)
+    if empty(names)
+        redraw!
+        " Nothing to open.
+        return
+    endif
+    " Edit the first item.
+    exec 'edit ' . fnameescape(names[0])
+    " Add any remaning items to the arg list/buffer list.
+    for name in names[1:]
+        exec 'argadd ' . fnameescape(name)
+    endfor
+    redraw!
+endfunction
+command! -bar RangerChooser call RangeChooser()
+nnoremap <leader>r :<C-U>RangerChooser<CR>
+
+" --------
+" deoplete
+" --------
+let g:deoplete#enable_at_startup = 1
+
+" ---------
+" vimfiler
+" ---------
+let g:vimfiler_as_default_explorer = 1
+noremap <C-X><C-T> :VimFiler -split -simple -winwidth=45 -no-quit<ENTER>
