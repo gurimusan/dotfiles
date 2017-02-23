@@ -48,7 +48,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "urxvtd", "unclutter -root", "albert" })
+run_once({ "urxvtd", "unclutter -root", "albert", "slack" })
 -- }}}
 
 
