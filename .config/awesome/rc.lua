@@ -10,6 +10,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+-- Volume control library
+local volume_control = require("volume-control")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -48,7 +50,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "urxvtd", "unclutter -root", "albert", "slack" })
+run_once({ "urxvtd", "unclutter -root", "albert" })
 -- }}}
 
 
@@ -71,6 +73,17 @@ browser     = "chromium"
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 altkey = "Mod1"
+
+-- define your volume control, using default settings:
+volumecfg = volume_control({
+  device  = nil,            -- e.g.: "default", "pulse"
+  cardid  = nil,            -- e.g.: 0, 1, ...
+  channel = "Master",
+  step    = '5%',           -- step size for up/down
+  lclick  = "toggle",       -- mouse actions described below
+  mclick  = "pavucontrol",
+  rclick  = "pavucontrol",
+})
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -234,6 +247,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
+            volumecfg.widget,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -331,6 +345,14 @@ globalkeys = awful.util.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
+
+    -- User program
+    awful.key({ modkey }, "q", function () awful.spawn(browser) end),
+
+    -- Volumen control keys
+    awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
+    awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
+    awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
