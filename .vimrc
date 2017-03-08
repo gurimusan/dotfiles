@@ -17,6 +17,8 @@ if dein#load_state(expand('~/.vim/dein'))
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/unite.vim')
   call dein#add('Shougo/vimfiler')
+  call dein#add('Glench/Vim-Jinja2-Syntax')
+  call dein#add('fatih/vim-go')
 endif
 
 syntax enable
@@ -41,6 +43,7 @@ set modelines=0
 set visualbell                  " ビープ音は鳴らさない
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
+    colorscheme molokai
 endif
 if exists(':tnoremap')
     tnoremap <Esc> <C-\><C-n>
@@ -166,6 +169,8 @@ nnoremap <ESC><ESC> :<C-u>set nohlsearch<Return>
 " --------
 "  Moving
 " --------
+nnoremap j gj
+nnoremap k gk
 inoremap <C-e> <END>
 inoremap <C-a> <HOME>
 inoremap <C-j> <Down>
@@ -223,7 +228,7 @@ let g:syntastic_disabled_filetypes=['scss']
 " ---------
 set encoding=utf-8
 set ffs=unix,dos,mac
-set fileencodings=iso-2022-jp,utf-8,cp932,sjis,euc-jp
+set fileencodings=utf-8,iso-2022-jp,cp932,sjis,euc-jp
 
 " -------------
 " RangerChooser
