@@ -108,3 +108,22 @@ function ranger-cd {
 }
 # This binds Ctrl-O to ranger-cd:
 bindkey -s '^O' 'ranger-cd\n'
+
+
+### SSH ###
+echo -n "ssh-agent: "
+if [ -e ~/.ssh/environment ]; then
+    source ~/.ssh/environment
+fi
+
+ssh-add -l >&/dev/null
+if [ $? = 2 ] ; then
+    echo -n "ssh-agent: restart...."
+    ssh-agent >~/.ssh/environment
+    source ~/.ssh/environment
+fi
+if ssh-add -l >&/dev/null ; then
+    echo "ssh-agent: Identity is already stored."
+else
+    ssh-add
+fi
