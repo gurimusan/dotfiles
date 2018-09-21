@@ -4,21 +4,16 @@
 if &compatible
   set nocompatible
 endif
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state(expand('~/.vim/dein'))
-  call dein#begin(expand('~/.vim/dein'))
-  call dein#add('tomasr/molokai')
-  call dein#add('scrooloose/syntastic')
-  call dein#add('godlygeek/tabular')
-  call dein#add('sudo.vim')
-  call dein#add('plasticboy/vim-markdown')
-  call dein#add('StanAngeloff/php.vim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/unite.vim')
-  call dein#add('Shougo/vimfiler')
-  call dein#add('Glench/Vim-Jinja2-Syntax')
-  call dein#add('fatih/vim-go')
+if dein#load_state(expand('~/.cache/dein'))
+  call dein#begin(expand('~/.cache/dein'))
+
+  call dein#load_toml('~/.config/dein/dein.toml',      {'lazy': 0})
+  call dein#load_toml('~/.config/dein/dein_lazy.toml', {'lazy': 1})
+
+  call dein#end()
+  call dein#save_state()
 endif
 
 syntax enable
@@ -265,13 +260,14 @@ endfunction
 command! -bar RangerChooser call RangeChooser()
 nnoremap <leader>r :<C-U>RangerChooser<CR>
 
-" --------
-" deoplete
-" --------
-let g:deoplete#enable_at_startup = 1
-
-" ---------
-" vimfiler
-" ---------
-let g:vimfiler_as_default_explorer = 1
-noremap <C-X><C-T> :VimFiler -split -simple -winwidth=45 -no-quit<ENTER>
+" Auto generete with save
+augroup vimrc-auto-mkdir  " {{{
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)  " {{{
+    if !isdirectory(a:dir) && (a:force ||
+    \    input(printf('"%s" does not exist. Create? [y/N]', a:dir)) =~? '^y\%[es]$')
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction  " }}}
+augroup END  " }}}

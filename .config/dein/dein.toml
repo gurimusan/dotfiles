@@ -1,0 +1,26 @@
+[[plugins]]
+repo  = 'w0rp/ale'
+
+[[plugins]]
+repo = 'tomasr/molokai'
+
+[[plugins]]
+repo = 'vim-scripts/sudo.vim'
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_source = 'let g:deoplete#enable_at_startup = 1'
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+hook_add = 'noremap <C-X><C-T> :VimFiler -split -simple -winwidth=45 -no-quit<ENTER>'
+hook_source = 'let g:vimfiler_as_default_explorer = 1'
+
+[[plugins]]
+repo = 'StanAngeloff/php.vim'
+
+[[plugins]]
+repo = 'Glench/Vim-Jinja2-Syntax'
