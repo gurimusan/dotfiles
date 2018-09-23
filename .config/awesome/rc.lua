@@ -12,6 +12,8 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- Volume control library
 local volume_control = require("volume-control")
+-- xrandr
+local xrandr = require("xrandr")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -353,6 +355,9 @@ globalkeys = awful.util.table.join(
     awful.key({}, "XF86AudioRaiseVolume", function() volumecfg:up() end),
     awful.key({}, "XF86AudioLowerVolume", function() volumecfg:down() end),
     awful.key({}, "XF86AudioMute",        function() volumecfg:toggle() end),
+
+    -- xrandr
+    awful.key({ modkey, "Shift"   }, "x", function () xrandr.xrandr() end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
