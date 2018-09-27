@@ -1,5 +1,5 @@
 [core]
-  pager = less -q -R
+  pager = less -R -F -X
   excludesfile = ~/.gitignore
   preloadindex = true
   quotepath = false
