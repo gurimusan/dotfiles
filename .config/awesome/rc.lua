@@ -359,6 +359,10 @@ globalkeys = awful.util.table.join(
     -- xrandr
     awful.key({ modkey, "Shift"   }, "x", function () xrandr.xrandr() end),
 
+    -- screenshot
+    awful.key({ }, "Print", function () awful.util.spawn("scrot -e 'mv $f ~/screenshots/ 2>/dev/null'", false) end),
+    awful.key( { modkey, }, "Print", function () awful.util.spawn_with_shell("sleep 0.5 && scrot -s -e 'mv $f ~/screenshots/ 2>/dev/null'") end),
+
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
