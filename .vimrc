@@ -36,6 +36,7 @@ set browsedir=buffer
 set whichwrap+=h,l,<,>,[,],b,s  " 行末・行頭から次の行へ移動可能に
 set modelines=0
 set visualbell                  " ビープ音は鳴らさない
+set ambiwidth=double
 if has('nvim')
     tnoremap <Esc> <C-\><C-n>
     colorscheme molokai
