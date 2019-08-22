@@ -6,6 +6,8 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
@@ -40,25 +42,13 @@ do
 end
 -- }}}
 
--- {{{ Autostart windowless processes
-local function run_once(cmd_arr)
-    for _, cmd in ipairs(cmd_arr) do
-        findme = cmd
-        firstspace = cmd:find(" ")
-        if firstspace then
-            findme = cmd:sub(0, firstspace-1)
-        end
-        awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
-    end
-end
-
-run_once({ "urxvtd", "unclutter -root", "albert" })
--- }}}
-
-
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(awful.util.get_themes_dir() .. "default/theme.lua")
+beautiful.get().font = "sans 16"
+beautiful.get().taglist_square_size = dpi(8)
+beautiful.get().menu_height = dpi(30)
+beautiful.get().menu_width  = dpi(200)
 -- beautiful.init(string.format("%s/.config/awesome/themes/multicolor/theme.lua", os.getenv("HOME")))
 
 -- This is used later as the default terminal and editor to run.
@@ -594,3 +584,5 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+require("autostart")
