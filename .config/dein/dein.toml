@@ -5,6 +5,9 @@ repo  = 'w0rp/ale'
 repo = 'tomasr/molokai'
 
 [[plugins]]
+repo = 'dracula/vim'
+
+[[plugins]]
 repo = 'vim-scripts/sudo.vim'
 
 [[plugins]]
@@ -27,3 +30,18 @@ repo = 'StanAngeloff/php.vim'
 
 [[plugins]]
 repo = 'Glench/Vim-Jinja2-Syntax'
+
+[[plugins]]
+repo = 'google/vim-jsonnet'
+
+[[plugins]]
+repo = 'fatih/vim-go'
+
+[[plugins]]
+repo = 'elixir-editors/vim-elixir'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+
+[[plugins]]
+repo = 'posva/vim-vue'

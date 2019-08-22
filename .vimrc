@@ -48,8 +48,13 @@ endif
 " ------
 " Mouse
 " ------
-set clipboard=unnamed,unnamedplus " クリップボードをOSと共有
-set mouse=a                       " 仮想端末上のvimでマウスを使う
+" クリップボードをOSと共有
+if has('unnamedplus')
+  set clipboard& clipboard+=unnamedplus
+else
+  set clipboard& clipboard+=unnamed
+endif
+set mouse=a               " 仮想端末上のvimでマウスを使う
 if !has('nvim')
   set ttymouse=xterm2
 endif
@@ -111,6 +116,7 @@ autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
 autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
 autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
 autocmd FileType jinja      setlocal sw=2 sts=2 ts=2 et
+autocmd FileType asm        setlocal sw=4 sts=4 ts=4 noet
 
 " --------
 " Dsiplay
