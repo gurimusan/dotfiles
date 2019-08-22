@@ -1,4 +1,4 @@
-Xft.dpi: 144
+Xft.dpi: 72
 Xft.antialias: true
 Xft.rgba: rbg
 Xft.hinting: true
@@ -34,10 +34,10 @@ URxvt.color14: #4eb4fa
 URxvt.color15: #d0d0d0
 
 ! Font
-URxvt.font: xft:Ricty:size=11:antialias=true
-URxvt.boldFont: xft:Ricty:Bold:size=11:antialias=true
-URxvt.italicFont: xft:Ricty:Bold:size=11:antialias=true
-URxvt.boldItalicFont: xft:Ricty:Bold:size=11:antialias=true
+URxvt.font: xft:Ricty:size=18:antialias=true
+URxvt.boldFont: xft:Ricty:Bold:size=18:antialias=true
+URxvt.italicFont: xft:Ricty:Bold:size=18:antialias=true
+URxvt.boldItalicFont: xft:Ricty:Bold:size=18:antialias=true
 
 ! Input method
 URxvt.inputMethod: fcitx
