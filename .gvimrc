@@ -1,3 +1,3 @@
-set guifont=Ricty\ 11
+set guifont=Ricty\ 16
 colorscheme molokai
 set guioptions+=a
