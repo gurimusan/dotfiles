@@ -11,6 +11,6 @@ linux)export LANG=C ;;
 *)export LANG=ja_JP.UTF-8 ;;
 esac
 
-export PATH=$PATH:~/bin
+export PATH=$PATH:~/.local/bin:~/bin:~/.cargo/bin
 
 export XDG_CONFIG_HOME="$HOME/.config"
