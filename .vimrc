@@ -44,6 +44,7 @@ endif
 if exists(':tnoremap')
     tnoremap <Esc> <C-\><C-n>
 endif
+set nofoldenable              " 折りたたみしない
 
 " ------
 " Mouse
@@ -278,3 +279,9 @@ augroup vimrc-auto-mkdir  " {{{
     endif
   endfunction  " }}}
 augroup END  " }}}
+
+
+" ------
+" LSP
+" ------
+lua require('mason').setup()

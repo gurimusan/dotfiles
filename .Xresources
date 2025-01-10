@@ -9,6 +9,7 @@ Xft.lcdfilter: lcddefault
 URxvt.allow_bold: true
 URxvt.transparent: true
 URxvt.shading: 15
+URxvt.saveLines: 50000
 
 ! Perl
 URxvt.perl-ext-common: default,matcher,clipboard-osc,xim-onthespot,selection-to-clipboard
@@ -46,3 +47,6 @@ URxvt.preeditType: OnTheSpot
 ! Click url
 URxvt.url-launcher: /usr/bin/xdg-open
 URxvt.matcher.button: 1
+
+! Clipboard
+URxvt.clipboard.autocopy: true

@@ -45,3 +45,15 @@ repo = 'rust-lang/rust.vim'
 
 [[plugins]]
 repo = 'posva/vim-vue'
+
+[[plugins]]
+repo = 'cstrahan/vim-capnp'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'

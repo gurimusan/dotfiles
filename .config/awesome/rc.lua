@@ -56,7 +56,7 @@ terminal    = "urxvtc"
 editor      = os.getenv("EDITOR") or "vi"
 editor      = os.getenv("EDITOR") or "nano" or "vi"
 editor_cmd  = terminal .. " -e " .. editor
-browser     = "chromium"
+browser     = "google-chrome-stable"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.

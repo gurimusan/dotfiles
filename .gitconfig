@@ -14,3 +14,11 @@
 
 [alias]
   glog = log --pretty=format:\"%C(red)%h%Creset %C(cyan)<%an>%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset\" --abbrev-commit --date=relative --graph
+[diff]
+  tool = nvimdiff
+[difftool]
+  prompt = false
+
+[credential "https://git-codecommit.ap-northeast-1.amazonaws.com"]
+  helper = !/home/gurimusan/.local/bin/aws codecommit credential-helper $@ --profile wdps
+  usehttppath = true
