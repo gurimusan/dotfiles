@@ -66,7 +66,7 @@ esac
 
 ## Title ###
 case "${TERM}" in
-kterm*|xterm*|*rxvt*)
+kterm*|xterm*|*rxvt*|foot*)
   precmd() {
     echo -ne "\033]0;${USER}@${HOST%%.*}\007"
   }
@@ -76,9 +76,8 @@ esac
 ### Alias ###
 setopt complete_aliases
 alias ls="ls --color"
-alias pbcopy="xsel --clipboard --input"
-alias open="xdg-open"
-alias docker_rmi_unused="docker rmi $(docker images -f 'dangling=true' -q)"
+# alias pbcopy="xsel --clipboard --input"
+# alias open="xdg-open"
 
 ### Peco history search ###
 #setopt hist_ignore_all_dups
@@ -128,9 +127,3 @@ if ssh-add -l >&/dev/null ; then
 else
     ssh-add
 fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/gurimusan/.local/src/google-cloud-sdk/path.zsh.inc' ]; then source '/home/gurimusan/.local/src/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/gurimusan/.local/src/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/gurimusan/.local/src/google-cloud-sdk/completion.zsh.inc'; fi
