@@ -5,6 +5,9 @@ repo  = 'w0rp/ale'
 repo = 'tomasr/molokai'
 
 [[plugins]]
+repo = 'catppuccin/nvim'
+
+[[plugins]]
 repo = 'dracula/vim'
 
 [[plugins]]
@@ -57,3 +60,16 @@ repo = 'peitalin/vim-jsx-typescript'
 
 [[plugins]]
 repo = 'williamboman/mason.nvim'
+
+# for ChatGPT.nvim
+[[plugins]]
+repo = "MunifTanjim/nui.nvim"
+
+[[plugins]]
+repo = "nvim-lua/plenary.nvim"
+
+[[plugins]]
+repo = "folke/trouble.nvim"
+
+[[plugins]]
+repo = "nvim-telescope/telescope.nvim"
