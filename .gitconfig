@@ -22,3 +22,9 @@
 [credential "https://git-codecommit.ap-northeast-1.amazonaws.com"]
   helper = !/home/gurimusan/.local/bin/aws codecommit credential-helper $@ --profile wdps
   usehttppath = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

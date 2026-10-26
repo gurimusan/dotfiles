@@ -1,0 +1,39 @@
+// -*- mode: jsonc -*-
+{
+  "layer": "top",
+  "position": "top",
+  "margin-bottom": 0,
+  "spacing": 0,
+  "include": [
+    "~/.config/waybar/modules.json"
+  ],
+  "modules-left": [
+    "group/navigation",
+    "hyprland/window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "group/system"
+  ],
+  "group/navigation": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/logo",
+      "hyprland/workspaces"
+    ]
+  },
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/wallpaper",
+      "privacy",
+      "network",
+      "pulseaudio",
+      "custom/clipboard",
+      "custom/notification",
+      "custom/logout"
+    ]
+  }
+}
