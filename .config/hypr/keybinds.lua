@@ -67,3 +67,6 @@ hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = tr
 hl.bind(mainMod .. " + PRINT",         hl.dsp.exec_cmd("hyprshot -m window"))  -- window
 hl.bind("PRINT",                       hl.dsp.exec_cmd("hyprshot -m output"))  -- monitor
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region"))  -- region
+
+-- Jump to the Claude Code session waiting for input
+hl.bind(mainMod .. " + A",hl.dsp.exec_cmd("~/.config/waybar/scripts/claude-waybar focus"))
