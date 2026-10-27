@@ -27,6 +27,7 @@
   "group/system": {
     "orientation": "horizontal",
     "modules": [
+      "custom/claude",
       "custom/wallpaper",
       "privacy",
       "network",

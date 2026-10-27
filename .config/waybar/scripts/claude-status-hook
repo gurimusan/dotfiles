@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# claude-status-hook
+# Claude Code の hooks から呼ばれ、セッションごとの状態を
+#   ${XDG_CACHE_HOME:-~/.cache}/claude-status/<session_id>.json
+# に書き出す。状態が変わったら Waybar にシグナル (RTMIN+8) を送る。
+#
+# 状態: running(実行中) / waiting(入力・許可待ち) / idle(完了)
+set -u
+
+dir="${XDG_CACHE_HOME:-$HOME/.cache}/claude-status"
+mkdir -p "$dir"
+
+input=$(cat)
+sid=$(jq -r '.session_id // empty' <<<"$input" 2>/dev/null)
+[ -z "$sid" ] && exit 0
+event=$(jq -r '.hook_event_name // empty' <<<"$input")
+cwd=$(jq -r '.cwd // empty' <<<"$input")
+file="$dir/$sid.json"
+
+signal_waybar() { pkill -RTMIN+8 -x waybar 2>/dev/null || true; }
+
+case "$event" in
+  SessionEnd)       rm -f "$file"; signal_waybar; exit 0 ;;
+  SessionStart)     state=idle ;;
+  UserPromptSubmit) state=running ;;
+  PostToolUse)      state=running ;;   # 許可を出した後に running へ戻すため
+  Notification)     state=waiting ;;
+  Stop)             state=idle ;;
+  *)                exit 0 ;;
+esac
+
+prev_state="" prev_prompt="" addr=""
+if [ -f "$file" ]; then
+  prev_state=$(jq -r '.state // ""' "$file" 2>/dev/null)
+  prev_prompt=$(jq -r '.prompt // ""' "$file" 2>/dev/null)
+  addr=$(jq -r '.address // ""' "$file" 2>/dev/null)
+fi
+
+# 完了後しばらく放置したときの「入力待ち」通知では idle のままにする
+if [ "$event" = Notification ] && [ "$prev_state" = idle ]; then
+  exit 0
+fi
+# PostToolUse は頻繁に来るので、状態が変わらないなら何もしない
+if [ "$event" = PostToolUse ] && [ "$prev_state" = running ]; then
+  exit 0
+fi
+
+prompt=$prev_prompt
+if [ "$event" = UserPromptSubmit ]; then
+  prompt=$(jq -r '(.prompt // "") | gsub("\\s+"; " ") | .[0:120]' <<<"$input")
+fi
+
+# このセッションが動いている Hyprland ウィンドウを、プロセスの親をたどって探す
+find_addr() {
+  command -v hyprctl >/dev/null || return 0
+  local clients pid=$PPID a
+  clients=$(hyprctl clients -j 2>/dev/null) || return 0
+  while [ -n "$pid" ] && [ "$pid" -gt 1 ]; do
+    a=$(jq -r --argjson p "$pid" 'map(select(.pid == $p)) | .[0].address // empty' <<<"$clients")
+    if [ -n "$a" ]; then echo "$a"; return 0; fi
+    pid=$(ps -o ppid= -p "$pid" 2>/dev/null | tr -d ' ')
+  done
+}
+[ -z "$addr" ] && addr=$(find_addr)
+
+jq -n \
+  --arg state "$state" --arg cwd "$cwd" --arg prompt "$prompt" \
+  --arg address "$addr" --argjson updated "$(date +%s)" \
+  '{state: $state, cwd: $cwd, project: ($cwd | split("/") | last),
+    prompt: $prompt, address: $address, updated: $updated}' \
+  >"$file.tmp" && mv "$file.tmp" "$file"
+
+[ "$state" != "$prev_state" ] && signal_waybar
+exit 0

@@ -130,3 +130,19 @@ window#waybar.empty #window {
 #custom-logout {
   color: @lavender;
 }
+
+#custom-claude {
+  padding: 0px 10px;
+}
+
+#custom-claude.waiting {
+  color: @red;
+}
+
+#custom-claude.running {
+  color: @blue;
+}
+
+#custom-claude.idle {
+  color: @green;
+}

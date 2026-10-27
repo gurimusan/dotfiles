@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# claude-waybar
+#   claude-waybar         Waybar 用の JSON を出力
+#   claude-waybar focus   一番長く待たせている「入力待ち」ウィンドウへ移動
+#                         (待ちがなければ完了済みのものへ)
+set -u
+dir="${XDG_CACHE_HOME:-$HOME/.cache}/claude-status"
+mkdir -p "$dir"
+
+# 12時間更新のない状態ファイル(異常終了したセッションなど)を掃除
+find "$dir" -name '*.json' -mmin +720 -delete 2>/dev/null
+
+shopt -s nullglob
+files=("$dir"/*.json)
+
+if [ "${1:-}" = focus ]; then
+  [ ${#files[@]} -eq 0 ] && exit 0
+  addr=$(jq -rs '
+    map(select(.address != "")) as $all
+    | ([$all[] | select(.state == "waiting")] | sort_by(.updated) | .[0].address)
+      // ([$all[] | select(.state == "idle")] | sort_by(.updated) | .[0].address)
+      // empty' "${files[@]}")
+  [ -n "$addr" ] && hyprctl dispatch focuswindow "address:$addr" >/dev/null
+  exit 0
+fi
+
+if [ ${#files[@]} -eq 0 ]; then
+  echo '{"text": "", "tooltip": "Claude Code: セッションなし", "class": "empty"}'
+  exit 0
+fi
+
+jq -cs '
+  def esc: gsub("&"; "&amp;") | gsub("<"; "&lt;") | gsub(">"; "&gt;");
+  def icon: {waiting: "●", running: "◐", idle: "○"}[.state] // "?";
+  def order: {waiting: 0, running: 1, idle: 2}[.state] // 3;
+  (map(select(.state == "waiting")) | length) as $w
+  | (map(select(.state == "running")) | length) as $r
+  | (map(select(.state == "idle"))    | length) as $i
+  | {
+      text: "CC ●\($w) ◐\($r) ○\($i)",
+      tooltip: (
+        sort_by(order, .updated)
+        | map("\(icon) <b>\(.project | esc)</b>  \(.prompt | esc)")
+        | join("\n")
+      ),
+      class: (if $w > 0 then "waiting" elif $r > 0 then "running" else "idle" end)
+    }' "${files[@]}"

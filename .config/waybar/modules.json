@@ -137,6 +137,13 @@
     "on-click": "~/.local/bin/waypaper --random",
     "on-click-right": "~/.local/bin/waypaper"
   },
+  "custom/claude": {
+    "exec": "~/.config/waybar/scripts/claude-waybar",
+    "return-type": "json",
+    "interval": 10,
+    "signal": 8,
+    "on-click": "~/.config/waybar/scripts/claude-waybar focus"
+  },
   "custom/logout": {
     "format": "",
     "tooltip": false,
