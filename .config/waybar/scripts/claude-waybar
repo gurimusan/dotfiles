@@ -20,7 +20,8 @@ if [ "${1:-}" = focus ]; then
     | ([$all[] | select(.state == "waiting")] | sort_by(.updated) | .[0].address)
       // ([$all[] | select(.state == "idle")] | sort_by(.updated) | .[0].address)
       // empty' "${files[@]}")
-  [ -n "$addr" ] && hyprctl dispatch focuswindow "address:$addr" >/dev/null
+  # Lua 設定の Hyprland では dispatch の引数は Lua 式として解釈される
+  [ -n "$addr" ] && hyprctl dispatch "hl.dsp.focus({ window = \"address:$addr\" })" >/dev/null
   exit 0
 fi
 
